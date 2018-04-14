@@ -46,4 +46,5 @@ function offMode() {
 function dopamineMode() {
     document.querySelector("#related").classList.add("hidden");
     document.querySelector("#comments").classList.add("hidden");
+    document.querySelector("#toggleButton").click();
 }
