@@ -1,0 +1,30 @@
+{
+  "name": "Dopamine",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Remove dopamine loops on websites to increase productivity",
+  "icons": {
+    "128": "images/dopamine-128.png"
+  },
+  "background": {
+    "scripts": ["scripts/background.js"]
+  },
+  "default_locale": "en",
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["scripts/dopamine.js"],
+      "css": ["styles/dopamine.css"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs",
+    "https://www.youtube.com/*"
+  ],
+  "browser_action": {
+    "default_title": "Dopamine",
+    "default_popup": "popup.html"
+  }
+}
