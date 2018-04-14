@@ -1,6 +1,15 @@
 # Dopamine
 This is a an app that removes the dopamine loops that most sites implement to keep you on their site.
 
+## How to install
+Clone the repo and cd into the directory `git clone https://github.com/jonasthiesen/dopamine && cd dopamine`
+
+Run `npm install`
+
+Go to the Chrome Extensions tab and enable developer mode.
+
+Load the extensions "app" folder.
+
 ## How does it work
 It has three modes: off, dopamine, and block.
 
