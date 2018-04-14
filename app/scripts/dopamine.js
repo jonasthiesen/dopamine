@@ -38,6 +38,7 @@ function handleMode(mode) {
 function offMode() {
     document.querySelector("#related").classList.remove("hidden");
     document.querySelector("#comments").classList.remove("hidden");
+    document.querySelector(".ytp-endscreen-content").classList.remove("hidden");
 }
 
 /**
@@ -46,6 +47,7 @@ function offMode() {
 function dopamineMode() {
     document.querySelector("#related").classList.add("hidden");
     document.querySelector("#comments").classList.add("hidden");
+    document.querySelector(".ytp-endscreen-content").classList.add("hidden");
 
     if (document.querySelector("#toggle").getAttribute("aria-selected") == "true") {
         document.querySelector("#toggleButton").click();
