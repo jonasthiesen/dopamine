@@ -8,7 +8,7 @@ Run `npm install`
 
 Go to the Chrome Extensions tab and enable developer mode.
 
-Load the extensions "app" folder.
+Load the extension's "app" folder.
 
 ## How does it work
 It has three modes: off, dopamine, and block.
