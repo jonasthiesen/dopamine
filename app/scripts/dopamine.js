@@ -1,55 +1,89 @@
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Dopamine = function () {
+    /**
+     * Construct a dopamine object for a specific site
+     * @param {string} url 
+     * @param {string} elements 
+     * @param {Function} logic 
+     */
+    function Dopamine(url, stylesheet, logic) {
+        _classCallCheck(this, Dopamine);
+
+        this.url = url;
+        this.stylesheet = stylesheet;
+        this.logic = logic;
+    }
+
+    _createClass(Dopamine, [{
+        key: 'inject',
+        value: function inject() {
+            this.injectCSS();
+            this.logic();
+        }
+    }, {
+        key: 'withdraw',
+        value: function withdraw() {
+            this.removeCSS();
+        }
+    }, {
+        key: 'injectCSS',
+        value: function injectCSS() {
+            var path = './styles/' + this.stylesheet + '.css';
+            var link = document.createElement('link');
+            link.href = chrome.runtime.getURL(path);
+            link.rel = 'stylesheet';
+            link.id = this.stylesheet;
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+    }, {
+        key: 'removeCSS',
+        value: function removeCSS() {
+            $('#' + this.stylesheet).remove();
+        }
+    }]);
+
+    return Dopamine;
+}();
+
+var youtube = new Dopamine('https://www.youtube.com/*', 'dopamine', function () {
+    if ($('#toggle').getAttribute('aria-selected') == 'true') {
+        $('#toggleButton').click();
+    }
+});
+
 /**
  * Listen for changes in the mode
  */
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     handleMode(request.mode);
 });
 
 /**
  * Get the current mode from the storage
  */
-chrome.runtime.sendMessage({method: "mode"}, reponse => {
+chrome.runtime.sendMessage({ method: 'mode' }, function (reponse) {
     handleMode(response.mode);
 });
 
 /**
- * 
+ * Call the right method depending on what mode is currently active
  * @param {string} mode 
  */
 function handleMode(mode) {
-    switch(mode) {
-        case "off":
-            offMode();
+    switch (mode) {
+        case 'off':
+            youtube.withdraw();
             break;
-        case "dopamine":
-            dopamineMode();
+        case 'dopamine':
+            youtube.inject();
             break;
-        case "block":
+        case 'block':
             blockMode();
             break;
-    }
-}
-
-/**
- * Change the relevant elements in the DOM related to when the mode is set to off
- */
-function offMode() {
-    document.querySelector("#related").classList.remove("hidden");
-    document.querySelector("#comments").classList.remove("hidden");
-    document.querySelector(".ytp-endscreen-content").classList.remove("hidden");
-}
-
-/**
- * Change the relevant elements in the DOM related to when the mode is set to dopamine
- */
-function dopamineMode() {
-    document.querySelector("#related").classList.add("hidden");
-    document.querySelector("#comments").classList.add("hidden");
-    document.querySelector(".ytp-endscreen-content").classList.add("hidden");
-
-    if (document.querySelector("#toggle").getAttribute("aria-selected") == "true") {
-        document.querySelector("#toggleButton").click();
     }
 }

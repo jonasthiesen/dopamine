@@ -3,67 +3,75 @@
 /**
  * Load buttons
  */
-const off = document.querySelector('#option-off');
-const dopamine = document.querySelector('#option-dopamine');
-const block = document.querySelector('#option-block');
+
+var off = document.querySelector('#option-off');
+var dopamine = document.querySelector('#option-dopamine');
+var block = document.querySelector('#option-block');
 
 /**
  * Sets the correct styling for the buttons when the popup is loaded
  */
-getMode(mode => {
+getMode(function (mode) {
     switch (mode) {
-        case "off":
+        case 'off':
             buttonSelected(off);
             break;
-        case "dopamine":
+        case 'dopamine':
             buttonSelected(dopamine);
             break;
-        case "block":
+        case 'block':
             buttonSelected(block);
             break;
     }
 });
+
 /**
  * Set the mode to off in the storage and broadcast message to the content script
  */
-off.onclick = function() {
-    setMode("off", () => {
-        broadcastMode("off");
+off.onclick = function () {
+    setMode('off', function () {
+        broadcastMode('off');
 
         buttonSelected(off);
-        [dopamine, block].forEach(x => buttonNotSelected(x));
+        [dopamine, block].forEach(function (x) {
+            return buttonNotSelected(x);
+        });
     });
 };
 
 /**
  * Set the mode to dopamine in the storage and broadcast message to the content script
  */
-dopamine.onclick = function() {
-    setMode("dopamine", () => {
-        broadcastMode("dopamine");
+dopamine.onclick = function () {
+    setMode('dopamine', function () {
+        broadcastMode('dopamine');
 
         // Sets the player mode to wide
         chrome.cookies.set({
-            "url": "https://www.youtube.com/*",
-            "name": "wide",
-            "value": "1",
-            "domain": ".youtube.com",
+            'url': 'https://www.youtube.com/*',
+            'name': 'wide',
+            'value': '1',
+            'domain': '.youtube.com'
         });
 
         buttonSelected(dopamine);
-        [off, block].forEach(x => buttonNotSelected(x));
+        [off, block].forEach(function (x) {
+            return buttonNotSelected(x);
+        });
     });
 };
 
 /**
  * Set the mode to block in the storage and broadcast message to the content script
  */
-block.onclick = function() {
-    setMode("block", () => {
-        broadcastMode("block")
+block.onclick = function () {
+    setMode('block', function () {
+        broadcastMode('block');
 
         buttonSelected(block);
-        [off, dopamine].forEach(x => buttonNotSelected(x));
+        [off, dopamine].forEach(function (x) {
+            return buttonNotSelected(x);
+        });
     });
 };
 
@@ -73,7 +81,7 @@ block.onclick = function() {
  * @param {function} callback 
  */
 function setMode(value, callback) {
-    chrome.storage.sync.set({"mode": value}, callback);
+    chrome.storage.sync.set({ 'mode': value }, callback);
 }
 
 /**
@@ -81,18 +89,18 @@ function setMode(value, callback) {
  * @param {function} callback 
  */
 function getMode(callback) {
-    chrome.storage.sync.get(function(result) {
-        callback(result.mode);
+    chrome.storage.sync.get(function (result) {
+        return callback(result.mode);
     });
 }
 
 /**
- * 
+ * Broadcast the mode to the content script
  * @param {string} msg 
  */
 function broadcastMode(msg) {
-    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, {mode: msg});
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { mode: msg });
     });
 }
 
@@ -101,8 +109,8 @@ function broadcastMode(msg) {
  * @param {Element} button 
  */
 function buttonSelected(button) {
-    button.classList.remove("bg-blue", "text-white", "hover:bg-blue-dark");
-    button.classList.add("bg-grey", "text-black", "cursor-not-allowed");
+    button.classList.remove('bg-blue', 'text-white', 'hover:bg-blue-dark');
+    button.classList.add('bg-grey', 'text-black', 'cursor-not-allowed');
 }
 
 /**
@@ -110,13 +118,6 @@ function buttonSelected(button) {
  * @param {Element} button 
  */
 function buttonNotSelected(button) {
-    button.classList.remove("bg-grey", "text-black", "cursor-not-allowed");
-    button.classList.add("bg-blue", "text-white", "hover:bg-blue-dark");
+    button.classList.remove('bg-grey', 'text-black', 'cursor-not-allowed');
+    button.classList.add('bg-blue', 'text-white', 'hover:bg-blue-dark');
 }
-
-/**
- * Liste for when the content script wants to fetch the current mode and respond
- */
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.method == "mode") getMode((mode) => sendResponse(mode));
-});
