@@ -1,3 +1,11 @@
-#related { display: none !important; }
-#comments { display: none !important; }
-.ytp-endscreen-content { display: none !important}
+/* Hide on videos */
+#related,
+.ytp-endscreen-content {
+    display: none !important;
+}
+
+/* Hide on front page */
+.ytd-browse[page-subtype="home"],
+#guide-content { 
+    display: none !important;
+}

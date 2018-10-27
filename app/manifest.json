@@ -13,8 +13,12 @@
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/*"],
-      "js": ["scripts/helper.js", "scripts/dopamine.js"],
-      "run_at": "document_end"
+      "js": [
+        "scripts/helper.js",
+        "scripts/dopamine.js",
+        "scripts/dopamine/register.js",
+        "scripts/app.js"
+      ]
     }
   ],
   "web_accessible_resources": [

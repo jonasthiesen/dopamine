@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
  */
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     getMode(function (mode) {
-        chrome.tabs.sendMessage(tabId, { mode: mode });
+        chrome.tabs.sendMessage(tabId, { 'mode': mode });
     });
 });
 
