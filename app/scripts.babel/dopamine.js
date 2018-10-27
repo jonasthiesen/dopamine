@@ -13,7 +13,14 @@ class Dopamine {
         this.logic = logic;
     }
 
+    /**
+     * Inject the CSS and additional logic for the specified url
+     */
     inject() {
+        if (!location.href.includes(this.url)) {
+            return;
+        }
+
         this.injectCSS();
         this.logic();
     }

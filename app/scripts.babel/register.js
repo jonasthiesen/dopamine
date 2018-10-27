@@ -1,6 +1,6 @@
 'use strict';
 
-const youtube = new Dopamine('https://www.youtube.com/*', 'dopamine', () => {
+const youtube = new Dopamine('youtube.com', 'dopamine', () => {
     if ($('#toggle').getAttribute('aria-selected') == 'true') {
         $('#toggleButton').click();
     }

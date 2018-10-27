@@ -1,7 +1,11 @@
 'use strict';
 
 const blacklist = [
-    'youtube.com'
+    'youtube.com',
+    'facebook.com',
+    'reddit.com',
+    'linkedin.com',
+    'twitter.com',
 ];
 
 const stylesheet = 'blocker';

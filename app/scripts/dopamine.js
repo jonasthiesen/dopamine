@@ -19,9 +19,18 @@ var Dopamine = function () {
         this.logic = logic;
     }
 
+    /**
+     * Inject the CSS and additional logic for the specified url
+     */
+
+
     _createClass(Dopamine, [{
         key: 'inject',
         value: function inject() {
+            if (!location.href.includes(this.url)) {
+                return;
+            }
+
             this.injectCSS();
             this.logic();
         }

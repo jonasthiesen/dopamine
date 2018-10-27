@@ -1,6 +1,6 @@
 'use strict';
 
-var blacklist = ['youtube.com'];
+var blacklist = ['youtube.com', 'facebook.com', 'reddit.com', 'linkedin.com', 'twitter.com'];
 
 var stylesheet = 'blocker';
 
