@@ -8,6 +8,9 @@ Clone the repo and cd into the directory:
 Then install the node modules:
 `npm install`
 
+Lastly, compile the JavaScript:
+`gulp babel`
+
 Go to the Chrome Extensions tab and enable developer mode.
 
 Load the extension's "app" folder.
