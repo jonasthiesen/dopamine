@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 /**
  * Get the current mode from the storage
  */
-chrome.runtime.sendMessage({method: 'mode'}, reponse => {
+chrome.runtime.sendMessage({method: 'mode'}, response => {
     handleMode(response.mode);
 });
 
@@ -19,17 +19,22 @@ chrome.runtime.sendMessage({method: 'mode'}, reponse => {
  * @param {string} mode 
  */
 function handleMode(mode) {
+
     switch(mode) {
         case 'off':
             registerDopamine.forEach(dopamine => dopamine.withdraw());
+            unblockBlacklistedWebsites();
 
             break;
         case 'dopamine':
+            unblockBlacklistedWebsites();
             registerDopamine.forEach(dopamine => dopamine.inject());
 
             break;
         case 'block':
-            blockMode();
+            registerDopamine.forEach(dopamine => dopamine.withdraw());
+            blockBlacklistedWebsites();
+
             break;
     }
 }

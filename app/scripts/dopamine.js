@@ -35,15 +35,21 @@ var Dopamine = function () {
         value: function injectCSS() {
             var path = './styles/' + this.stylesheet + '.css';
             var link = document.createElement('link');
+
             link.href = chrome.runtime.getURL(path);
             link.rel = 'stylesheet';
             link.id = this.stylesheet;
+
             document.getElementsByTagName('head')[0].appendChild(link);
         }
     }, {
         key: 'removeCSS',
         value: function removeCSS() {
-            $('#' + this.stylesheet).remove();
+            var element = $('#' + this.stylesheet);
+
+            if (element != null) {
+                element.remove();
+            }
         }
     }]);
 

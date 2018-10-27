@@ -24,14 +24,20 @@ class Dopamine {
 
     injectCSS() {
         const path = './styles/' + this.stylesheet + '.css';
-        var link = document.createElement('link');
+        let link = document.createElement('link');
+
         link.href = chrome.runtime.getURL(path);
         link.rel = 'stylesheet';
         link.id = this.stylesheet;
+
         document.getElementsByTagName('head')[0].appendChild(link);
     }
 
     removeCSS() {
-        $('#' + this.stylesheet).remove();
+        const element = $('#' + this.stylesheet);
+
+        if (element != null) {
+            element.remove();
+        }
     }
 }

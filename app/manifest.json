@@ -16,7 +16,8 @@
       "js": [
         "scripts/helper.js",
         "scripts/dopamine.js",
-        "scripts/dopamine/register.js",
+        "scripts/register.js",
+        "scripts/blocker.js",
         "scripts/app.js"
       ]
     }
@@ -28,7 +29,7 @@
     "storage",
     "cookies",
     "tabs",
-    "https://www.youtube.com/*"
+    "*://*/*"
   ],
   "browser_action": {
     "default_title": "Dopamine",
